@@ -1,14 +1,35 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, FlatList} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  Modal,
+} from 'react-native';
 
 import colors from './Colors';
 import tempData from './tempData';
 import TodoList from './components/Card';
-
+import Card from './components/Card';
+import ModalList from './components/ModalList';
 export default class App extends Component {
+  state = {
+    modalVisible: false,
+  };
+
+  toogleAddTodoModal() {
+    this.setState({modalVisible: !this.state.modalVisible});
+  }
   render() {
     return (
       <View style={styles.container}>
+        <Modal
+          animationType="slide"
+          visible={this.state.modalVisible}
+          onRequestClose={() => this.toogleAddTodoModal()}>
+          <ModalList closeModal={() => this.toogleAddTodoModal()} />
+        </Modal>
         <View style={{flexDirection: 'row'}}>
           <View style={styles.divider} />
           <Text style={styles.title}>
@@ -19,7 +40,9 @@ export default class App extends Component {
         </View>
 
         <View style={{marginTop: 48}}>
-          <TouchableOpacity style={styles.addButton}>
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() => this.toogleAddTodoModal()}>
             <Text style={{fontSize: 16, color: colors.blue}}>+</Text>
           </TouchableOpacity>
         </View>
@@ -34,10 +57,10 @@ export default class App extends Component {
           }}>
           <FlatList
             data={tempData}
-            keyExtractor={item => item.name}
+            keyExtractor={(item) => item.name}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            renderItem={({item}) => <TodoList list={item} />}
+            renderItem={({item}) => <Card list={item} />}
           />
         </View>
       </View>

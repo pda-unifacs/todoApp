@@ -2,9 +2,9 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import colors from '../Colors';
 
-export default (TodoList = ({list}) => {
-  const completedCount = list.todos.filter(todo => todo.completed).length;
-  const remainingCount = list.todos.length - completedCount;
+export default (Card = ({list}) => {
+  const completedCount = list.tasks.filter(todo => todo.completed).length;
+  const remainingCount = list.tasks.length - completedCount;
   return (
     <View style={[styles.listContainer, {backgroundColor: list.color}]}>
       <Text style={styles.listTitle} numberOfLines={1}>

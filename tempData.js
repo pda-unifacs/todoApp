@@ -2,7 +2,7 @@ export default (tempData = [
   {
     name: 'Aprender Django',
     color: '#24A6D9',
-    todos: [
+    tasks: [
       {
         title: 'Procrastinar',
         completed: true,
@@ -20,7 +20,7 @@ export default (tempData = [
   {
     name: 'Aprender Backend',
     color: '#8022D9',
-    todos: [
+    tasks: [
       {
         title: 'Estudar Python',
         completed: false,
