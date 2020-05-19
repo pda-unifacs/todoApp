@@ -34,7 +34,7 @@ export default class App extends Component {
           <View style={styles.divider} />
           <Text style={styles.title}>
             Todo
-            <Text style={{fontWeight: '300', color: colors.blue}}>List</Text>
+            <Text style={{fontWeight: '300', color: colors.blue}}>App</Text>
           </Text>
           <View style={styles.divider} />
         </View>

@@ -1,32 +1,24 @@
 export default (tempData = [
   {
-    name: 'Aprender Django',
+    name: 'Aprender React Native',
     color: '#24A6D9',
     tasks: [
       {
-        title: 'Procrastinar',
+        title: 'Estudar básico de React',
         completed: true,
-      },
-      {
-        title: 'Estudar Python',
-        completed: false,
-      },
-      {
-        title: 'E outras coisas ai',
-        completed: false,
       },
     ],
   },
   {
-    name: 'Aprender Backend',
+    name: 'Rotina Diária',
     color: '#8022D9',
     tasks: [
       {
-        title: 'Estudar Python',
+        title: 'Trabalhar',
         completed: false,
       },
       {
-        title: 'E outras coisas ai',
+        title: 'Estudar',
         completed: false,
       },
     ],
