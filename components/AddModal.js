@@ -13,22 +13,23 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import colors from '../Colors';
 import tempData from '../tempData';
 
-export default class ModaList extends Component {
+export default class AddModal extends Component {
   backgroundColors = [
-    '#000',
-    '#f00',
-    '#0f0',
-    '#00f',
+    '#900c3f',
+    '#ff5733',
+    '#12947f',
+    '#c70039',
     '#f5a090',
-    '#993',
-    '#223',
+    '#511845',
+    '#2fc4b2',
+    '#f17808',
   ];
   state = {
     listName: '',
     color: this.backgroundColors[0],
   };
 
-  createTodo = () => {
+  createTodo() {
     const {name, color} = this.state;
 
     tempData.push({
@@ -36,9 +37,10 @@ export default class ModaList extends Component {
       color,
       tasks: [],
     });
+
     this.setState({name: ''});
     this.props.closeModal();
-  };
+  }
 
   renderColors() {
     return this.backgroundColors.map(color => {
@@ -96,15 +98,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: '800',
-    color: colors.black,
+    color: colors.red,
     alignSelf: 'center',
     marginBottom: 16,
   },
   input: {
-    borderWidth: 0.4,
-    borderColor: colors.blue,
+    borderWidth: 1,
+    borderColor: colors.black,
     borderRadius: 6,
     height: 50,
     marginTop: 8,

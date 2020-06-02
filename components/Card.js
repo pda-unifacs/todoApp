@@ -1,28 +1,50 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, Text, View, TouchableOpacity, Modal} from 'react-native';
 import colors from '../Colors';
+import TaskModal from './TaskModal';
 
-export default (Card = ({list}) => {
-  const completedCount = list.tasks.filter(todo => todo.completed).length;
-  const remainingCount = list.tasks.length - completedCount;
-  return (
-    <View style={[styles.listContainer, {backgroundColor: list.color}]}>
-      <Text style={styles.listTitle} numberOfLines={1}>
-        {list.name}
-      </Text>
+export default class Card extends Component {
+  state = {
+    showList: false,
+  };
+
+  toggleListModal() {
+    this.setState({showList: !this.state.showList});
+  }
+
+  render() {
+    const list = this.props.list;
+    const completedCount = list.tasks.filter((task) => task.completed).length;
+    const remainingCount = list.tasks.length - completedCount;
+    return (
       <View>
-        <View style={{alignItems: 'center'}}>
-          <Text style={styles.count}>{remainingCount}</Text>
-          <Text style={styles.subtitle}>À fazer</Text>
-        </View>
-        <View style={{alignItems: 'center'}}>
-          <Text style={styles.count}>{completedCount}</Text>
-          <Text style={styles.subtitle}>Finalizadas</Text>
-        </View>
+        <Modal
+          animationType="slide"
+          visible={this.state.showList}
+          onRequestClose={() => this.toggleListModal()}>
+          <TaskModal list={list} closeModal={() => this.toggleListModal()} />
+        </Modal>
+        <TouchableOpacity
+          style={[styles.listContainer, {backgroundColor: list.color}]}
+          onPress={() => this.toggleListModal()}>
+          <Text style={styles.listTitle} numberOfLines={1}>
+            {list.name}
+          </Text>
+          <View>
+            <View style={{alignItems: 'center'}}>
+              <Text style={styles.count}>{remainingCount}</Text>
+              <Text style={styles.subtitle}>À fazer</Text>
+            </View>
+            <View style={{alignItems: 'center'}}>
+              <Text style={styles.count}>{completedCount}</Text>
+              <Text style={styles.subtitle}>Finalizadas</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
       </View>
-    </View>
-  );
-});
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   listContainer: {

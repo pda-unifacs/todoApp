@@ -1,17 +1,25 @@
 export default (tempData = [
   {
     name: 'Aprender React Native',
-    color: '#24A6D9',
+    color: '#900c3f',
     tasks: [
       {
-        title: 'Estudar básico de React',
+        title: 'Estudar javascript',
         completed: true,
+      },
+      {
+        title: 'Props e State',
+        completed: false,
+      },
+      {
+        title: 'React Hooks',
+        completed: false,
       },
     ],
   },
   {
     name: 'Rotina Diária',
-    color: '#8022D9',
+    color: '#c70039',
     tasks: [
       {
         title: 'Trabalhar',

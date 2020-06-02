@@ -1,6 +1,8 @@
 export default (colors = {
   black: '#2D3436',
-  blue: '#24A6D9',
-  lightBlue: '#A7CBD9',
+  red: '#900c3f',
+  lightRed: '#c70039',
   white: '#FFF',
+  grey: '#A4A4A4',
+  lightGrey: '#CACACA',
 });
