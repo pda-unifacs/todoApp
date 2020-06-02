@@ -32,11 +32,9 @@ export default class AddModal extends Component {
   createTodo() {
     const {name, color} = this.state;
 
-    tempData.push({
-      name,
-      color,
-      tasks: [],
-    });
+    const list = {name, color};
+
+    this.props.addList(list);
 
     this.setState({name: ''});
     this.props.closeModal();

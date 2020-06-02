@@ -1,5 +1,6 @@
 export default (tempData = [
   {
+    id: 1,
     name: 'Aprender React Native',
     color: '#900c3f',
     tasks: [
@@ -18,6 +19,7 @@ export default (tempData = [
     ],
   },
   {
+    id: 2,
     name: 'Rotina Diária',
     color: '#c70039',
     tasks: [

@@ -15,6 +15,7 @@ import AddModal from './components/AddModal';
 export default class App extends Component {
   state = {
     modalVisible: false,
+    lists: tempData,
   };
 
   toogleAddTodoModal() {
@@ -22,7 +23,24 @@ export default class App extends Component {
   }
 
   renderList = list => {
-    return <Card list={list} />;
+    return <Card list={list} updateList={this.updateList} />;
+  };
+
+  addList = list => {
+    this.setState({
+      lists: [
+        ...this.state.lists,
+        {...list, id: this.state.lists.length + 1, tasks: []},
+      ],
+    });
+  };
+
+  updateList = list => {
+    this.setState({
+      lists: this.state.lists.map(item => {
+        return item.id === list.id ? list : item;
+      }),
+    });
   };
 
   render() {
@@ -32,7 +50,10 @@ export default class App extends Component {
           animationType="slide"
           visible={this.state.modalVisible}
           onRequestClose={() => this.toogleAddTodoModal()}>
-          <AddModal closeModal={() => this.toogleAddTodoModal()} />
+          <AddModal
+            closeModal={() => this.toogleAddTodoModal()}
+            addList={this.addList}
+          />
         </Modal>
         <View style={{flexDirection: 'row'}}>
           <View style={styles.divider} />
@@ -60,7 +81,7 @@ export default class App extends Component {
             paddingLeft: 32,
           }}>
           <FlatList
-            data={tempData}
+            data={this.state.lists}
             keyExtractor={item => item.name}
             horizontal={true}
             showsHorizontalScrollIndicator={false}

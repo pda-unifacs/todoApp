@@ -15,20 +15,32 @@ import colors from '../Colors';
 
 export default class TaskModal extends Component {
   state = {
-    name: this.props.list.name,
-    color: this.props.list.color,
-    tasks: this.props.list.tasks,
+    newTask: '',
   };
 
-  renderTask = task => {
+  toogleTaskCompleted = index => {
+    let list = this.props.list;
+    list.tasks[index].completed = !list.tasks[index].completed;
+
+    this.props.updateList(list);
+  };
+
+  addTask = () => {
+    let list = this.props.list;
+    list.tasks.push({title: this.state.newTask, completed: false});
+
+    this.props.updateList(list);
+    this.setState({newTask: ''});
+  };
+
+  renderTask = (task, index) => {
     return (
       <View style={styles.taskContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => this.toogleTaskCompleted(index)}>
           <Text
             style={[task.completed ? styles.checkboxDone : styles.checkbox]}
           />
         </TouchableOpacity>
-
         <Text
           style={[
             styles.task,
@@ -44,9 +56,9 @@ export default class TaskModal extends Component {
   };
 
   render() {
-    const taskCount = this.state.tasks.length;
-    const completedCount = this.state.tasks.filter(task => task.completed)
-      .length;
+    const list = this.props.list;
+    const taskCount = list.tasks.length;
+    const completedCount = list.tasks.filter(task => task.completed).length;
 
     return (
       <SafeAreaView style={styles.container}>
@@ -59,10 +71,10 @@ export default class TaskModal extends Component {
           style={[
             styles.section,
             styles.header,
-            {borderBottomColor: this.state.color},
+            {borderBottomColor: list.color},
           ]}>
           <View>
-            <Text style={styles.title}>{this.state.name}</Text>
+            <Text style={styles.title}>{list.name}</Text>
             <Text style={styles.taskCount}>
               {completedCount} de {taskCount} tarefas
             </Text>
@@ -70,28 +82,30 @@ export default class TaskModal extends Component {
         </View>
         <View style={[styles.section, {flex: 3}]}>
           <FlatList
-            data={this.state.tasks}
-            renderItem={({item}) => this.renderTask(item)}
+            data={list.tasks}
+            renderItem={({item, index}) => this.renderTask(item, index)}
             keyExtractor={item => item.title}
-            contentContainerStyle={{paddingHorizontal: 28, paddingVertical: 64}}
+            contentContainerStyle={{
+              paddingHorizontal: 28,
+              paddingVertical: 64,
+            }}
+            horizontal={false}
             showsVerticalScrollIndicator={false}
           />
         </View>
 
-        <KeyboardAwareScrollView
-          behavior="padding"
-          style={styles.section}
-          contentContainerStyle={{
-            alignItems: 'center',
-            paddingHorizontal: 32,
-            flexDirection: 'row',
-          }}>
-          <TextInput style={[styles.input, {borderColor: this.state.color}]} />
+        <View style={[styles.section, styles.footer]}>
+          <TextInput
+            style={[styles.input, {borderColor: list.color}]}
+            onChangeText={text => this.setState({newTask: text})}
+            value={this.state.newTask}
+          />
           <TouchableOpacity
-            style={[styles.addTask, {backgroundColor: this.state.color}]}>
+            style={[styles.addTask, {backgroundColor: list.color}]}
+            onPress={() => this.addTask()}>
             <Text style={{fontSize: 16, color: '#fff'}}>+</Text>
           </TouchableOpacity>
-        </KeyboardAwareScrollView>
+        </View>
       </SafeAreaView>
     );
   }
@@ -169,5 +183,11 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontWeight: '700',
     fontSize: 16,
+  },
+
+  footer: {
+    alignItems: 'center',
+    paddingHorizontal: 32,
+    flexDirection: 'row',
   },
 });

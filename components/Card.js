@@ -14,7 +14,7 @@ export default class Card extends Component {
 
   render() {
     const list = this.props.list;
-    const completedCount = list.tasks.filter((task) => task.completed).length;
+    const completedCount = list.tasks.filter(task => task.completed).length;
     const remainingCount = list.tasks.length - completedCount;
     return (
       <View>
@@ -22,7 +22,11 @@ export default class Card extends Component {
           animationType="slide"
           visible={this.state.showList}
           onRequestClose={() => this.toggleListModal()}>
-          <TaskModal list={list} closeModal={() => this.toggleListModal()} />
+          <TaskModal
+            list={list}
+            closeModal={() => this.toggleListModal()}
+            updateList={this.props.updateList}
+          />
         </Modal>
         <TouchableOpacity
           style={[styles.listContainer, {backgroundColor: list.color}]}
