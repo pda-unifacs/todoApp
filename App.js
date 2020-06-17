@@ -12,10 +12,15 @@ import colors from './Colors';
 import tempData from './tempData';
 import Card from './components/Card';
 import AddModal from './components/AddModal';
+import {api} from './axios';
 export default class App extends Component {
   state = {
     modalVisible: false,
-    lists: tempData,
+    lists: [],
+  };
+
+  fetchData = () => {
+    api.get('todo').then(res => this.setState({lists: res.data}));
   };
 
   toogleAddTodoModal() {
