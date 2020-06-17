@@ -85,6 +85,9 @@ export default class App extends Component {
             height: 275,
             paddingLeft: 32,
           }}>
+          <TouchableOpacity onPress={() => this.fetchData()}>
+            <Text>Teste get data</Text>
+          </TouchableOpacity>
           <FlatList
             data={this.state.lists}
             keyExtractor={item => item.name}
