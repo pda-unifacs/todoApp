@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Modal} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Modal,
+  Alert,
+} from 'react-native';
 import colors from '../Colors';
 import TaskModal from './TaskModal';
 
@@ -12,9 +19,28 @@ export default class Card extends Component {
     this.setState({showList: !this.state.showList});
   }
 
+  deleteAlert() {
+    Alert.alert(
+      `Deseja excluir ${this.props.list.name} ?`,
+      'Ela será excluída permanentemente',
+      [
+        {
+          text: 'Não',
+          onPress: () => console.log('Cancel Pressed'),
+        },
+        {text: 'Sim', onPress: () => this.props.deleteTodo(this.props.list)},
+      ],
+      {cancelable: false},
+    );
+  }
+
   render() {
     const list = this.props.list;
-    const completedCount = list.tasks.filter(task => task.completed).length;
+
+    var completedCount = list.tasks.filter(task => task.completed).length
+      ? list.tasks.filter(task => task.completed).length
+      : 0;
+
     const remainingCount = list.tasks.length - completedCount;
     return (
       <View>
@@ -30,6 +56,7 @@ export default class Card extends Component {
         </Modal>
         <TouchableOpacity
           style={[styles.listContainer, {backgroundColor: list.color}]}
+          onLongPress={() => this.deleteAlert()}
           onPress={() => this.toggleListModal()}>
           <Text style={styles.listTitle} numberOfLines={1}>
             {list.name}

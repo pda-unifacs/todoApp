@@ -84,7 +84,7 @@ export default class TaskModal extends Component {
           <FlatList
             data={list.tasks}
             renderItem={({item, index}) => this.renderTask(item, index)}
-            keyExtractor={item => item.title}
+            keyExtractor={(item, index) => `list${item.id}-${index}`}
             contentContainerStyle={{
               paddingHorizontal: 28,
               paddingVertical: 64,

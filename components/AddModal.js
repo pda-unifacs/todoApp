@@ -11,7 +11,6 @@ import {
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import colors from '../Colors';
-import tempData from '../tempData';
 
 export default class AddModal extends Component {
   backgroundColors = [
@@ -31,8 +30,9 @@ export default class AddModal extends Component {
 
   createTodo() {
     const {name, color} = this.state;
+    const id = !this.props.lists ? 0 : this.props.lists.length + 1;
 
-    const list = {name, color};
+    const list = {name, color, tasks: [], id};
 
     this.props.addList(list);
 
